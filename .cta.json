@@ -1,0 +1,25 @@
+{
+  "projectName": "shadows-of-void-reborn",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "pnpm",
+  "tailwind": true,
+  "addOnOptions": {},
+  "git": true,
+  "version": 1,
+  "framework": "react-cra",
+  "chosenAddOns": [
+    "biome",
+    "nitro",
+    "start",
+    "better-auth",
+    "tanstack-query",
+    "t3env",
+    "shadcn",
+    "mcp",
+    "form",
+    "compiler",
+    "convex",
+    "table"
+  ]
+}
