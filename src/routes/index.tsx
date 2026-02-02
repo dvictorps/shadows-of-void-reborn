@@ -1,30 +1,28 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useForm } from '@tanstack/react-form'
 
 import { z } from 'zod'
 import { authClient } from '../lib/auth-client'
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute('/')({
+  component: Home,
+})
 
 function Home() {
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
   const form = useForm({
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
     onSubmit: async ({ value }) => {
-      await authClient.signIn.email({
-        email: value.email,
+      await authClient.signIn.username({
+        username: value.username,
         password: value.password,
         callbackURL: '/characters',
       }, {
-        onSuccess: () => {
-          navigate({ to: '/characters' })
-        },
         onError: (ctx) => {
           alert(ctx.error.message || 'Login failed')
         }
@@ -64,10 +62,10 @@ function Home() {
             >
               <div className="space-y-4">
                 <form.Field
-                  name="email"
+                  name="username"
                   validators={{
                     onChange: ({ value }) => {
-                      const result = z.string().email().safeParse(value)
+                      const result = z.string().min(3).safeParse(value)
                       return result.success ? undefined : result.error.issues[0].message
                     },
                   }}
@@ -78,7 +76,7 @@ function Home() {
                         htmlFor={field.name}
                         className="text-xs font-semibold uppercase tracking-wider text-purple-200/50 ml-1"
                       >
-                        {t('login.email')}
+                        {t('login.username')}
                       </label>
                       <input
                         id={field.name}
@@ -87,7 +85,7 @@ function Home() {
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         className="flex h-12 w-full rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                        placeholder="name@example.com"
+                        placeholder="voidwalker"
                       />
                       {field.state.meta.errors ? (
                         <em className="text-xs text-red-400 ml-1">

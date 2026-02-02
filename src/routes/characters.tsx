@@ -1,16 +1,11 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { Plus, Trash2, Play, LogOut } from 'lucide-react'
 import { authClient } from '../lib/auth-client'
 
+import { GameButton } from '../components/GameButton'
+
 export const Route = createFileRoute('/characters')({
-  beforeLoad: async () => {
-    const session = await authClient.getSession()
-    if (!session.data) {
-      throw redirect({
-        to: '/',
-      })
-    }
-  },
   component: Characters,
 })
 
@@ -21,8 +16,6 @@ function Characters() {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          // Redirect to home is usually handled by navigation or better-auth defaults, 
-          // but for now we'll just let the user click and use TanStack Router link if needed.
           window.location.href = '/'
         }
       }
@@ -46,30 +39,30 @@ function Characters() {
 
         {/* Primary Action Buttons */}
         <div className="flex gap-4">
-          <button className="flex-1 border border-white py-2 px-4 hover:bg-white hover:text-black transition-colors font-bold flex items-center justify-center gap-2 group uppercase text-sm">
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity">+</span>
+          <GameButton className="flex-1">
+            <Plus size={16} />
             {t('characters.create')}
-          </button>
-          <button className="flex-1 border border-white py-2 px-4 hover:bg-white hover:text-black transition-colors font-bold flex items-center justify-center gap-2 group uppercase text-sm">
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity">×</span>
+          </GameButton>
+          <GameButton className="flex-1">
+            <Trash2 size={16} />
             {t('characters.delete')}
-          </button>
-          <button className="flex-[1.5] border border-white py-2 px-4 hover:bg-white hover:text-black transition-colors font-bold flex items-center justify-center gap-2 group uppercase text-sm">
-            <span className="opacity-0 group-hover:opacity-100 transition-opacity">▶</span>
+          </GameButton>
+          <GameButton className="flex-[1.5]">
+            <Play size={16} />
             {t('characters.play')}
-          </button>
+          </GameButton>
         </div>
       </div>
 
       {/* Logout / Menu Button Bottom Right */}
       <div className="fixed bottom-8 right-8">
-        <button 
+        <GameButton 
           onClick={handleLogout}
-          className="border border-white py-2 px-4 hover:bg-white hover:text-black transition-colors font-bold uppercase text-xs flex items-center gap-2 group"
+          className="text-xs py-1.5 px-3"
         >
-          <span className="opacity-0 group-hover:opacity-100 transition-opacity">←</span>
+          <LogOut size={14} />
           {t('characters.logout')}
-        </button>
+        </GameButton>
       </div>
     </div>
   )
