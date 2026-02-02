@@ -20,7 +20,6 @@ export function GameButton({ children, className = '', ...props }: GameButtonPro
       `}
       {...props}
     >
-      {/* Optional: subtle subtle scanline or noise effect could go here in the future */}
       <span className="relative z-10 flex items-center gap-2">
         {children}
       </span>
