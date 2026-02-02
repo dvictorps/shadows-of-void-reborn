@@ -48,7 +48,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const routerState = useRouterState()
-  const isHome = routerState.location.pathname === '/'
+  const hideHeaderPages = ['/', '/register', '/characters']
+  const hideHeader = hideHeaderPages.includes(routerState.location.pathname)
 
   return (
     <html>
@@ -57,7 +58,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ConvexProvider>
-          {!isHome && <Header />}
+          {!hideHeader && <Header />}
           {children}
           <TanStackDevtools
             config={{

@@ -25,14 +25,19 @@ This document provides essential guidelines and context for AI agents working on
 - **Styling**: Use Tailwind 4 utility classes. Prefer CSS variables for theme-consistent colors.
 - **Convex Guidelines**: Refer to `.cursorrules` for specific Convex schema and validator practices.
 
-## 🧠 Global Skills Available
+## 🧠 Global Skills Mandate
 
-The following global skills are available in `C:/Users/php/.agents/skills` and should be utilized when relevant:
-- `brainstorming`: For architectural or feature design discussions.
-- `frontend-design`: For UI/UX principles.
-- `web-design-guidelines`: For modern web aesthetics.
-- `vercel-react-best-practices`: For React performance and patterns.
-- `security-review` & `seo-audit`: For specialized checks.
+The project uses specific skills to enhance quality and consistency. Always prioritize using them:
+
+- **Brainstorming**: MUST use the `brainstorming` skill for any architectural, feature, or design discussion before implementation.
+- **Frontend Development**: MUST use all relevant frontend skills (`frontend-design`, `web-design-guidelines`, `vercel-react-best-practices`) for UI/UX tasks.
+- **Security**: MUST use the `security-review` skill whenever possible to audit new features or sensitive logic.
+- **Game Development**: For any game design or development task, you MUST use the `game-development` and `game-design-theory` skills.
+
+Available paths:
+- `C:/Users/php/.agents/skills/`
+- `~\.agents\skills\game-development`
+- `~\.agents\skills\game-design-theory`
 
 ## 📂 Project Structure
 

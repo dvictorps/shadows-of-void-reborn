@@ -5,7 +5,30 @@
     "password": "Password",
     "submit": "Enter the Void",
     "welcome": "Welcome back, survivor",
-    "back_to_reality": "Back to Reality"
+    "back_to_reality": "Back to Reality",
+    "no_account": "Don't have an account?",
+    "register_here": "Sign up here"
+  },
+  "register": {
+    "title": "Shadows of Void",
+    "welcome": "Join the collective",
+    "description": "Begin your journey into the unknown",
+    "username": "Username",
+    "name": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "submit": "Join the Void",
+    "have_account": "Already have an account?",
+    "login_here": "Sign in here"
+  },
+  "characters": {
+    "title": "Characters",
+    "empty_state": "No characters created. Click Create.",
+    "create": "CREATE",
+    "delete": "DELETE",
+    "play": "PLAY",
+    "logout": "EXIT / MENU"
   },
   "common": {
     "loading": "Loading...",

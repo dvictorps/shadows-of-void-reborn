@@ -126,22 +126,29 @@ code {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-void-purple: oklch(0.488 0.243 285);
+  --color-void-purple: oklch(0.5 0.3 285);
+  --color-void-glow: oklch(0.6 0.4 285 / 0.5);
   
   @keyframes void-pulse {
     0%, 100% {
-      opacity: 0.4;
-      transform: scale(1);
+      opacity: 0.3;
+      transform: scale(1) translate(0, 0);
       filter: blur(40px);
     }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.1);
+    33% {
+      opacity: 0.5;
+      transform: scale(1.1) translate(2%, 2%);
       filter: blur(60px);
+    }
+    66% {
+      opacity: 0.4;
+      transform: scale(1.05) translate(-2%, 1%);
+      filter: blur(50px);
     }
   }
 
-  --animate-void-pulse: void-pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-void-pulse: void-pulse 8s ease-in-out infinite;
+  --animate-void-pulse-slow: void-pulse 12s ease-in-out infinite reverse;
 }
 
 @layer base {
