@@ -26,13 +26,13 @@ function Characters() {
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
       {/* Main Container */}
       <div className="w-full max-w-lg border border-white p-8 flex flex-col gap-8">
-        <h1 className="text-4xl font-black text-center uppercase tracking-widest">
+        <h1 className="text-4xl font-bold text-center uppercase tracking-widest">
           {t('characters.title')}
         </h1>
 
         {/* Characters List / Empty State Area */}
         <div className="border border-white min-h-[400px] flex items-center justify-center p-8 text-center">
-          <p className="text-lg opacity-60 font-mono">
+          <p className="text-lg opacity-60">
             {t('characters.empty_state')}
           </p>
         </div>

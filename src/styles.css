@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Orbitron:wght@400..900&family=Inter:wght@100..900&display=swap');
+/* Local Font Source Installation */
+@import "@fontsource/pixelify-sans/index.css";
+@import "@fontsource/orbitron/index.css";
+@import "@fontsource/inter/index.css";
 
 @import 'tw-animate-css';
 
@@ -11,25 +14,91 @@
   --font-game: 'Pixelify Sans', 'Orbitron', sans-serif;
 }
 
-body {
-  @apply m-0;
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-game: var(--font-game);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-void-purple: oklch(0.5 0.3 285);
+  --color-void-glow: oklch(0.6 0.4 285 / 0.5);
+  
+  @keyframes void-pulse {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(1) translate(0, 0);
+      filter: blur(40px);
+    }
+    33% {
+      opacity: 0.5;
+      transform: scale(1.1) translate(2%, 2%);
+      filter: blur(60px);
+    }
+    66% {
+      opacity: 0.4;
+      transform: scale(1.05) translate(-2%, 1%);
+      filter: blur(50px);
+    }
+  }
+
+  --animate-void-pulse: void-pulse 8s ease-in-out infinite;
+  --animate-void-pulse-slow: void-pulse 12s ease-in-out infinite reverse;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-game);
-}
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    font-family: var(--font-sans);
+  }
+  
+  html, body {
+    @apply m-0 bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-game);
+  }
 
-/* Icons inherit text color */
-svg {
-  stroke: currentColor;
-}
-
-code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  input, button, textarea, select {
+    font-family: inherit;
+  }
 }
 
 :root {
@@ -103,73 +172,12 @@ code {
   --sidebar-ring: oklch(0.442 0.017 285.786);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-void-purple: oklch(0.5 0.3 285);
-  --color-void-glow: oklch(0.6 0.4 285 / 0.5);
-  
-  @keyframes void-pulse {
-    0%, 100% {
-      opacity: 0.3;
-      transform: scale(1) translate(0, 0);
-      filter: blur(40px);
-    }
-    33% {
-      opacity: 0.5;
-      transform: scale(1.1) translate(2%, 2%);
-      filter: blur(60px);
-    }
-    66% {
-      opacity: 0.4;
-      transform: scale(1.05) translate(-2%, 1%);
-      filter: blur(50px);
-    }
-  }
-
-  --animate-void-pulse: void-pulse 8s ease-in-out infinite;
-  --animate-void-pulse-slow: void-pulse 12s ease-in-out infinite reverse;
+/* Icons inherit text color */
+svg {
+  stroke: currentColor;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
+import { toast } from 'sonner'
 import { authClient } from '../lib/auth-client'
 
 export const Route = createFileRoute('/register')({
@@ -29,10 +30,11 @@ function Register() {
         callbackURL: '/characters',
       }, {
         onSuccess: () => {
+          toast.success(t('register.success_message') || 'Account created successfully!')
           navigate({ to: '/characters' })
         },
         onError: (ctx) => {
-          alert(ctx.error.message || 'Registration failed')
+          toast.error(ctx.error.message || 'Registration failed')
         }
       })
     },
@@ -50,7 +52,7 @@ function Register() {
         <div className="flex-1 text-center lg:text-left space-y-4 relative">
           <div className="absolute top-1/2 left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-[-10%] -translate-y-1/2 w-[120%] h-[150%] bg-void-purple/30 blur-[80px] animate-void-pulse -z-10 pointer-events-none" />
           
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mix-blend-screen drop-shadow-[0_0_40px_rgba(168,85,247,0.4)] animate-in fade-in slide-in-from-left-8 duration-1000">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white mix-blend-screen drop-shadow-[0_0_40px_rgba(168,85,247,0.4)] animate-in fade-in slide-in-from-left-8 duration-1000">
             {t('register.title')}
           </h1>
         </div>
@@ -182,7 +184,7 @@ function Register() {
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        className="flex h-12 w-full rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                        className="flex h-12 w-full rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all font-sans"
                       />
                       {field.state.meta.errors && (
                         <em className="text-xs text-red-400 ml-1">{field.state.meta.errors.join(', ')}</em>

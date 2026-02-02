@@ -1,26 +1,27 @@
 {
   "login": {
-    "title": "Shadows of Void",
-    "email": "E-mail",
+    "title": "VAZIO",
+    "welcome": "Bem-vindo de volta",
+    "email": "Email",
     "password": "Senha",
     "submit": "Entrar no Vazio",
-    "welcome": "Bem-vindo de volta, sobrevivente",
-    "back_to_reality": "Voltar para a Realidade",
-    "no_account": "Não tem uma conta?",
-    "register_here": "Registre-se aqui"
+    "no_account": "Novo aqui?",
+    "register_here": "Criar conta",
+    "success_message": "Bem-vindo de volta ao Vazio!"
   },
   "register": {
-    "title": "Shadows of Void",
+    "title": "UNIR",
     "welcome": "Junte-se ao coletivo",
     "description": "Comece sua jornada rumo ao desconhecido",
-    "username": "Nome de Usuário",
-    "name": "Nome Completo",
-    "email": "E-mail",
+    "username": "Usuário",
+    "name": "Nome",
+    "email": "Email",
     "password": "Senha",
     "confirm_password": "Confirmar Senha",
-    "submit": "Juntar-se ao Vazio",
-    "have_account": "Já tem uma conta?",
-    "login_here": "Entrar aqui"
+    "submit": "Inicializar",
+    "have_account": "Já é um membro?",
+    "login_here": "Entrar",
+    "success_message": "Sua essência foi registrada."
   },
   "characters": {
     "title": "Personagens",

@@ -14,6 +14,7 @@ import ConvexProvider from '../integrations/convex/provider'
 
 import appCss from '../styles.css?url'
 import '../lib/i18n'
+import { Toaster } from '../components/ui/sonner'
 
 import type { QueryClient } from '@tanstack/react-query'
 
@@ -60,6 +61,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <ConvexProvider>
           {!hideHeader && <Header />}
           {children}
+          <Toaster />
           <TanStackDevtools
             config={{
               position: 'bottom-right',

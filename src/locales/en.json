@@ -1,26 +1,25 @@
 {
   "login": {
-    "title": "Shadows of Void",
+    "title": "VOID",
+    "welcome": "Welcome back",
     "email": "Email",
     "password": "Password",
     "submit": "Enter the Void",
-    "welcome": "Welcome back, survivor",
-    "back_to_reality": "Back to Reality",
-    "no_account": "Don't have an account?",
-    "register_here": "Sign up here"
+    "no_account": "New here?",
+    "register_here": "Create account",
+    "success_message": "Welcome back to the Void!"
   },
   "register": {
-    "title": "Shadows of Void",
-    "welcome": "Join the collective",
-    "description": "Begin your journey into the unknown",
+    "title": "JOIN",
     "username": "Username",
-    "name": "Full Name",
+    "name": "Name",
     "email": "Email",
     "password": "Password",
     "confirm_password": "Confirm Password",
-    "submit": "Join the Void",
-    "have_account": "Already have an account?",
-    "login_here": "Sign in here"
+    "submit": "Initialize",
+    "have_account": "Already a member?",
+    "login_here": "Login",
+    "success_message": "Your essence has been registered."
   },
   "characters": {
     "title": "Characters",

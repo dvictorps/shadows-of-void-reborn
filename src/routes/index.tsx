@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useForm } from '@tanstack/react-form'
+import { toast } from 'sonner'
 
 import { z } from 'zod'
 import { authClient } from '../lib/auth-client'
@@ -14,17 +15,20 @@ function Home() {
 
   const form = useForm({
     defaultValues: {
-      username: '',
+      email: '',
       password: '',
     },
     onSubmit: async ({ value }) => {
-      await authClient.signIn.username({
-        username: value.username,
+      await authClient.signIn.email({
+        email: value.email,
         password: value.password,
         callbackURL: '/characters',
       }, {
+        onSuccess: () => {
+          toast.success(t('login.success_message') || 'Logged in successfully!')
+        },
         onError: (ctx) => {
-          alert(ctx.error.message || 'Login failed')
+          toast.error(ctx.error.message || 'Login failed')
         }
       })
     },
@@ -38,7 +42,7 @@ function Home() {
           {/* Concentrated Void Glow behind text */}
           <div className="absolute top-1/2 left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-[-10%] -translate-y-1/2 w-[120%] h-[150%] bg-void-purple/40 blur-[80px] animate-void-pulse -z-10 pointer-events-none" />
           
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mix-blend-screen drop-shadow-[0_0_40px_rgba(168,85,247,0.4)] animate-in fade-in slide-in-from-left-8 duration-1000">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white mix-blend-screen drop-shadow-[0_0_40px_rgba(168,85,247,0.4)] animate-in fade-in slide-in-from-left-8 duration-1000">
             {t('login.title')}
           </h1>
         </div>
@@ -62,10 +66,10 @@ function Home() {
             >
               <div className="space-y-4">
                 <form.Field
-                  name="username"
+                  name="email"
                   validators={{
                     onChange: ({ value }) => {
-                      const result = z.string().min(3).safeParse(value)
+                      const result = z.string().email().safeParse(value)
                       return result.success ? undefined : result.error.issues[0].message
                     },
                   }}
@@ -76,7 +80,7 @@ function Home() {
                         htmlFor={field.name}
                         className="text-xs font-semibold uppercase tracking-wider text-purple-200/50 ml-1"
                       >
-                        {t('login.username')}
+                        {t('login.email')}
                       </label>
                       <input
                         id={field.name}
@@ -84,8 +88,8 @@ function Home() {
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        className="flex h-12 w-full rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
-                        placeholder="voidwalker"
+                        className="flex h-12 w-full rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all font-sans"
+                        placeholder="name@example.com"
                       />
                       {field.state.meta.errors ? (
                         <em className="text-xs text-red-400 ml-1">
@@ -120,7 +124,7 @@ function Home() {
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        className="flex h-12 w-full rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+                        className="flex h-12 w-full rounded-2xl border border-white/5 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all font-sans"
                       />
                       {field.state.meta.errors ? (
                         <em className="text-xs text-red-400 ml-1">
