@@ -14,7 +14,6 @@ function Home() {
       email: '',
       password: '',
     },
-   
     onSubmit: async ({ value }) => {
       // In a real scenario, we'd call better-auth's signIn
       console.log('Login attempt:', value)
@@ -59,7 +58,10 @@ function Home() {
               <form.Field
                 name="email"
                 validators={{
-                  onChange: z.string().email(),
+                  onChange: ({ value }) => {
+                    const result = z.string().email().safeParse(value)
+                    return result.success ? undefined : result.error.issues[0].message
+                  },
                 }}
               >
                 {(field) => (
@@ -91,7 +93,10 @@ function Home() {
               <form.Field
                 name="password"
                 validators={{
-                  onChange: z.string().min(6),
+                  onChange: ({ value }) => {
+                    const result = z.string().min(6).safeParse(value)
+                    return result.success ? undefined : result.error.issues[0].message
+                  },
                 }}
               >
                 {(field) => (
