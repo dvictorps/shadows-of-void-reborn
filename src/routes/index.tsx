@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { useForm } from '@tanstack/react-form'
 import { toast } from 'sonner'
@@ -7,6 +7,11 @@ import { z } from 'zod'
 import { authClient } from '../lib/auth-client'
 
 export const Route = createFileRoute('/')({
+  beforeLoad: ({ context }) => {
+    if (context.isAuthenticated) {
+      throw redirect({ to: '/characters' })
+    }
+  },
   component: Home,
 })
 

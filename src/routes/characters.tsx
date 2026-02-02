@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { Plus, Trash2, Play, LogOut } from 'lucide-react'
 import { authClient } from '../lib/auth-client'
@@ -6,6 +6,11 @@ import { authClient } from '../lib/auth-client'
 import { GameButton } from '../components/GameButton'
 
 export const Route = createFileRoute('/characters')({
+  beforeLoad: ({ context }) => {
+    if (!context.isAuthenticated) {
+      throw redirect({ to: '/' })
+    }
+  },
   component: Characters,
 })
 

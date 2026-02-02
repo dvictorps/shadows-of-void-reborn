@@ -12,6 +12,7 @@
     "check": "biome check"
   },
   "dependencies": {
+    "@convex-dev/better-auth": "^0.10.10",
     "@convex-dev/react-query": "0.1.0",
     "@faker-js/faker": "^10.0.0",
     "@fontsource/inter": "^5.2.8",

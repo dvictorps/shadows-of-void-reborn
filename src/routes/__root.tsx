@@ -1,25 +1,30 @@
 import {
   HeadContent,
+  Outlet,
   Scripts,
   createRootRouteWithContext,
+  useRouteContext,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { useRouterState } from '@tanstack/react-router'
 
 import Header from '../components/Header'
-
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-import ConvexProvider from '../integrations/convex/provider'
+import { createServerFn } from '@tanstack/react-start'
+import { ConvexBetterAuthProvider } from '@convex-dev/better-auth/react'
+import type { ConvexQueryClient } from '@convex-dev/react-query'
+import type { QueryClient } from '@tanstack/react-query'
 
 import appCss from '../styles.css?url'
 import '../lib/i18n'
 import { Toaster } from '../components/ui/sonner'
+import { authClient } from '../lib/auth-client'
+import { getToken } from '../lib/auth-server'
 
-import type { QueryClient } from '@tanstack/react-query'
+const getAuth = createServerFn({ method: 'GET' }).handler(async () => {
+  return await getToken()
+})
 
 interface MyRouterContext {
   queryClient: QueryClient
+  convexQueryClient: ConvexQueryClient
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
@@ -33,7 +38,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Shadows of Void',
       },
     ],
     links: [
@@ -44,37 +49,58 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
 
-  shellComponent: RootDocument,
+  beforeLoad: async (ctx) => {
+    const token = await getAuth()
+    if (token) {
+      ctx.context.convexQueryClient.serverHttpClient?.setAuth(token)
+    }
+
+    const { pathname } = ctx.location
+    const hideHeader = [
+      '/',
+      '/register',
+      '/characters',
+    ].includes(pathname)
+
+    return {
+      hideHeader,
+      isAuthenticated: !!token,
+      token,
+    }
+  },
+
+  component: RootComponent,
 })
 
-function RootDocument({ children }: { children: React.ReactNode }) {
-  const routerState = useRouterState()
-  const hideHeaderPages = ['/', '/register', '/characters']
-  const hideHeader = hideHeaderPages.includes(routerState.location.pathname)
+function RootComponent() {
+  const context = useRouteContext({ from: Route.id })
 
   return (
-    <html>
+    <ConvexBetterAuthProvider
+      client={context.convexQueryClient.convexClient}
+      authClient={authClient}
+      initialToken={context.token}
+    >
+      <RootDocument>
+        <Outlet />
+      </RootDocument>
+    </ConvexBetterAuthProvider>
+  )
+}
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  const { hideHeader } = useRouteContext({ from: Route.id })
+
+  return (
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
       </head>
-      <body>
-        <ConvexProvider>
-          {!hideHeader && <Header />}
-          {children}
-          <Toaster />
-          <TanStackDevtools
-            config={{
-              position: 'bottom-right',
-            }}
-            plugins={[
-              {
-                name: 'Tanstack Router',
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-              TanStackQueryDevtools,
-            ]}
-          />
-        </ConvexProvider>
+      <body className="bg-background text-foreground">
+        {!hideHeader && <Header />}
+        {children}
+        <Toaster />
+
         <Scripts />
       </body>
     </html>

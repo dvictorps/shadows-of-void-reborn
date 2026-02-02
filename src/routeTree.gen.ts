@@ -13,7 +13,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as CharactersRouteImport } from './routes/characters'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
