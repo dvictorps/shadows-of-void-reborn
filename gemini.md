@@ -11,7 +11,7 @@
 - **Database/Backend**: Convex
 - **Styling**: Tailwind CSS 4 (+ `@tailwindcss/vite`)
 - **Validation**: Zod
-- **Auth**: Better Auth (Email/Password)
+- **Auth**: Better Auth + Convex (`@convex-dev/better-auth`)
 - **Notifications**: Sonner (Shadcn UI)
 - **Utilities**: `@uidotdev/usehooks`
 - **Fonts**: `@fontsource` (Pixelify Sans, Orbitron, Inter)
@@ -49,3 +49,107 @@
 - `src/hooks/`: Custom React hooks.
 - `src/lib/`: Library configurations (Auth, i18n).
 - `src/locales/`: Internationalization JSON files.
+- `src/gameData/`: Game constants (classes, skills, items).
+
+## 🔐 Better Auth + Convex Integration
+
+### Architecture Overview
+
+The authentication uses `@convex-dev/better-auth` which provides:
+- **Convex Component**: Auto-manages auth tables (users, sessions, accounts, verifications).
+- **HTTP Routes**: Auth endpoints served via Convex HTTP router.
+- **SSR Support**: Server-side token validation for TanStack Start.
+
+### Backend Files (convex/)
+
+| File | Purpose |
+|------|---------|
+| `convex.config.ts` | Registers the Better Auth component via `app.use(betterAuth)`. |
+| `auth.config.ts` | Exposes `getAuthConfigProvider()` for Convex auth validation. |
+| `auth.ts` | Factory `createAuth(ctx)` configures Better Auth with Convex adapter. |
+| `http.ts` | Registers auth HTTP routes via `authComponent.registerRoutes(http, createAuth)`. |
+
+### Frontend Files (src/lib/)
+
+| File | Purpose |
+|------|---------|
+| `auth-client.ts` | Client-side auth client with `convexClient()` and `usernameClient()` plugins. |
+| `auth-server.ts` | SSR utilities: `getToken()`, `fetchAuthQuery()`, `fetchAuthMutation()`. |
+
+### Key Imports
+
+```typescript
+// Backend (convex/auth.ts)
+import { betterAuth } from 'better-auth/minimal'
+import { createClient } from '@convex-dev/better-auth'
+import { convex } from '@convex-dev/better-auth/plugins'
+import { username } from 'better-auth/plugins' // NOT from @convex-dev!
+
+// Frontend (src/lib/auth-client.ts)
+import { createAuthClient } from 'better-auth/react'
+import { convexClient } from '@convex-dev/better-auth/client/plugins'
+import { usernameClient } from 'better-auth/client/plugins' // NOT from @convex-dev!
+```
+
+### Environment Variables
+
+**Local (.env.local):**
+```
+BETTER_AUTH_SECRET=<your-secret>
+VITE_CONVEX_URL=https://your-deployment.convex.cloud
+VITE_CONVEX_SITE_URL=https://your-deployment.convex.site
+```
+
+**Convex Dashboard (npx convex env set):**
+```
+BETTER_AUTH_SECRET=<your-secret>
+VITE_SITE_URL=http://localhost:3000
+```
+
+### Router Context Setup
+
+The root route (`__root.tsx`) must:
+1. Fetch token via `getToken()` server function.
+2. Pass `convexQueryClient` in route context.
+3. Wrap app with `<ConvexBetterAuthProvider>`.
+
+```typescript
+// src/router.tsx
+const CONVEX_URL = (import.meta as any).env.VITE_CONVEX_URL as string
+const convexQueryClient = new ConvexQueryClient(CONVEX_URL)
+```
+
+### Route Protection
+
+Use `beforeLoad` guards for route protection:
+
+```typescript
+// Protected route (requires auth)
+beforeLoad: ({ context }) => {
+  if (!context.isAuthenticated) {
+    throw redirect({ to: '/' })
+  }
+}
+
+// Auth route (redirect if already logged in)
+beforeLoad: ({ context }) => {
+  if (context.isAuthenticated) {
+    throw redirect({ to: '/characters' })
+  }
+}
+```
+
+### Schema Notes
+
+- **DO NOT** manually define auth tables in `convex/schema.ts`.
+- The Better Auth component auto-manages: `users`, `sessions`, `accounts`, `verifications`.
+- Only define YOUR application tables in the schema.
+
+### Vite Configuration
+
+Add to `vite.config.ts`:
+```typescript
+ssr: {
+  noExternal: ['@convex-dev/better-auth'],
+}
+```
