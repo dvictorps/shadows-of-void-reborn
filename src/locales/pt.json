@@ -1,0 +1,14 @@
+{
+  "login": {
+    "title": "Shadows of Void",
+    "email": "E-mail",
+    "password": "Senha",
+    "submit": "Entrar no Vazio",
+    "welcome": "Bem-vindo de volta, sobrevivente",
+    "back_to_reality": "Voltar para a Realidade"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Algo deu errado"
+  }
+}

@@ -5,14 +5,15 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import { useRouterState } from '@tanstack/react-router'
 
 import Header from '../components/Header'
 
-import TanStackQueryDevtools from './src/integrations/tanstack-query/devtools'
-
-import ConvexProvider from './src/integrations/convex/provider'
+import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import ConvexProvider from '../integrations/convex/provider'
 
 import appCss from '../styles.css?url'
+import '../lib/i18n'
 
 import type { QueryClient } from '@tanstack/react-query'
 
@@ -46,14 +47,17 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const routerState = useRouterState()
+  const isHome = routerState.location.pathname === '/'
+
   return (
-    <html lang="en">
+    <html>
       <head>
         <HeadContent />
       </head>
       <body>
         <ConvexProvider>
-          <Header />
+          {!isHome && <Header />}
           {children}
           <TanStackDevtools
             config={{

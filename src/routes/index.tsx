@@ -1,118 +1,135 @@
 import { createFileRoute } from '@tanstack/react-router'
-import {
-  Zap,
-  Server,
-  Route as RouteIcon,
-  Shield,
-  Waves,
-  Sparkles,
-} from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { useForm } from '@tanstack/react-form'
 
-export const Route = createFileRoute('/')({ component: App })
+import { z } from 'zod'
 
-function App() {
-  const features = [
-    {
-      icon: <Zap className="w-12 h-12 text-cyan-400" />,
-      title: 'Powerful Server Functions',
-      description:
-        'Write server-side code that seamlessly integrates with your client components. Type-safe, secure, and simple.',
+export const Route = createFileRoute('/')({ component: Home })
+
+function Home() {
+  const { t } = useTranslation()
+
+  const form = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
     },
-    {
-      icon: <Server className="w-12 h-12 text-cyan-400" />,
-      title: 'Flexible Server Side Rendering',
-      description:
-        'Full-document SSR, streaming, and progressive enhancement out of the box. Control exactly what renders where.',
+   
+    onSubmit: async ({ value }) => {
+      // In a real scenario, we'd call better-auth's signIn
+      console.log('Login attempt:', value)
     },
-    {
-      icon: <RouteIcon className="w-12 h-12 text-cyan-400" />,
-      title: 'API Routes',
-      description:
-        'Build type-safe API endpoints alongside your application. No separate backend needed.',
-    },
-    {
-      icon: <Shield className="w-12 h-12 text-cyan-400" />,
-      title: 'Strongly Typed Everything',
-      description:
-        'End-to-end type safety from server to client. Catch errors before they reach production.',
-    },
-    {
-      icon: <Waves className="w-12 h-12 text-cyan-400" />,
-      title: 'Full Streaming Support',
-      description:
-        'Stream data from server to client progressively. Perfect for AI applications and real-time updates.',
-    },
-    {
-      icon: <Sparkles className="w-12 h-12 text-cyan-400" />,
-      title: 'Next Generation Ready',
-      description:
-        'Built from the ground up for modern web applications. Deploy anywhere JavaScript runs.',
-    },
-  ]
+  })
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-      <section className="relative py-20 px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10"></div>
-        <div className="relative max-w-5xl mx-auto">
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <img
-              src="/tanstack-circle-logo.png"
-              alt="TanStack Logo"
-              className="w-24 h-24 md:w-32 md:h-32"
-            />
-            <h1 className="text-6xl md:text-7xl font-black text-white [letter-spacing:-0.08em]">
-              <span className="text-gray-300">TANSTACK</span>{' '}
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                START
-              </span>
-            </h1>
-          </div>
-          <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-            The framework for next generation AI applications
-          </p>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-            Full-stack framework powered by TanStack Router for React and Solid.
-            Build modern applications with server functions, streaming, and type
-            safety.
-          </p>
-          <div className="flex flex-col items-center gap-4">
-            <a
-              href="https://tanstack.com/start"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/50"
-            >
-              Documentation
-            </a>
-            <p className="text-gray-400 text-sm mt-2">
-              Begin your TanStack Start journey by editing{' '}
-              <code className="px-2 py-1 bg-slate-700 rounded text-cyan-400">
-                /src/routes/index.tsx
-              </code>
+    <div className="flex min-h-screen bg-background text-foreground overflow-hidden">
+      {/* Left Column: Pulsing Title */}
+      <div className="hidden lg:flex flex-1 items-center justify-center relative border-r border-white/5">
+        {/* Pulsing Aura Backdrop */}
+        <div className="absolute inset-0 flex items-center justify-center -z-10 overflow-hidden pointer-events-none">
+          <div className="w-[40vw] h-[40vw] rounded-full bg-void-purple animate-void-pulse blur-[60px]" />
+        </div>
+        
+        <h1 className="text-8xl font-black tracking-tighter text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+          {t('login.title')}
+        </h1>
+      </div>
+
+      {/* Right Column: Login Form */}
+      <div className="flex-1 flex flex-col items-center justify-center p-8 md:p-12 lg:p-24 bg-background z-10">
+        <div className="w-full max-w-md space-y-8">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight">
+              {t('login.welcome')}
+            </h2>
+            <p className="text-muted-foreground">
+              {t('login.back_to_reality')}
             </p>
           </div>
-        </div>
-      </section>
 
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-400 leading-relaxed">
-                {feature.description}
-              </p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              form.handleSubmit()
+            }}
+            className="space-y-6"
+          >
+            <div className="space-y-4">
+              <form.Field
+                name="email"
+                validators={{
+                  onChange: z.string().email(),
+                }}
+              >
+                {(field) => (
+                  <div className="space-y-2">
+                    <label
+                      htmlFor={field.name}
+                      className="text-sm font-medium leading-none"
+                    >
+                      {t('login.email')}
+                    </label>
+                    <input
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      placeholder="name@example.com"
+                    />
+                    {field.state.meta.errors ? (
+                      <em className="text-xs text-destructive">
+                        {field.state.meta.errors.join(', ')}
+                      </em>
+                    ) : null}
+                  </div>
+                )}
+              </form.Field>
+
+              <form.Field
+                name="password"
+                validators={{
+                  onChange: z.string().min(6),
+                }}
+              >
+                {(field) => (
+                  <div className="space-y-2">
+                    <label
+                      htmlFor={field.name}
+                      className="text-sm font-medium leading-none"
+                    >
+                      {t('login.password')}
+                    </label>
+                    <input
+                      id={field.name}
+                      name={field.name}
+                      type="password"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      className="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    />
+                    {field.state.meta.errors ? (
+                      <em className="text-xs text-destructive">
+                        {field.state.meta.errors.join(', ')}
+                      </em>
+                    ) : null}
+                  </div>
+                )}
+              </form.Field>
             </div>
-          ))}
+
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 w-full"
+            >
+              {t('login.submit')}
+            </button>
+          </form>
         </div>
-      </section>
+      </div>
     </div>
   )
 }
