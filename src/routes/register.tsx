@@ -1,8 +1,8 @@
+import { useForm } from '@tanstack/react-form'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { useForm } from '@tanstack/react-form'
-import { z } from 'zod'
 import { toast } from 'sonner'
+import { z } from 'zod'
 import { authClient } from '../lib/auth-client'
 
 export const Route = createFileRoute('/register')({

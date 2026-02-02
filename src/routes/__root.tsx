@@ -1,16 +1,15 @@
-import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRouteWithContext,
-  useRouteContext,
-} from '@tanstack/react-router'
-
-import Header from '../components/Header'
-import { createServerFn } from '@tanstack/react-start'
 import { ConvexBetterAuthProvider } from '@convex-dev/better-auth/react'
 import type { ConvexQueryClient } from '@convex-dev/react-query'
 import type { QueryClient } from '@tanstack/react-query'
+import {
+  createRootRouteWithContext,
+  HeadContent,
+  Outlet,
+  Scripts,
+  useRouteContext,
+} from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
+import Header from '../components/Header'
 
 import appCss from '../styles.css?url'
 import '../lib/i18n'

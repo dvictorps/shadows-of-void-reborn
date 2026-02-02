@@ -1,6 +1,6 @@
+import { useForm } from '@tanstack/react-form'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
-import { useForm } from '@tanstack/react-form'
 import { toast } from 'sonner'
 
 import { z } from 'zod'
