@@ -33,6 +33,12 @@ export const ITEM_CATEGORIES = [
         id: "magic",
         name: "Magic",
         description: "A magic item that can be used to cast spells.",
+    },
+    {
+        id: "offhand",
+        name: "Offhand",
+        description: "A piece of equipment that can be worn on the offhand.",
     }
-]
+] as const;
 
+export type ItemCategoryId = (typeof ITEM_CATEGORIES)[number]["id"];
